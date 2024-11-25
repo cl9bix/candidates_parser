@@ -67,19 +67,15 @@ def parse_with_filters(filters: dict):
     print(f"Запит за URL: {final_url} з параметрами: {query_params}")
 
     try:
-        # Виконуємо запит
         response = requests.get(final_url)
 
-        # Перевірка на успішність запиту
         if response.status_code != 200:
             print(f"Помилка: {response.status_code} під час запиту на {final_url}")
             return []
 
-        # Парсимо HTML сторінки
         soup = BeautifulSoup(response.text, "html.parser")
         data = []
 
-        # Шукаємо всі елементи, які містять інформацію про резюме
         data_list = soup.find_all("div", class_="mt-sm")
         for i in data_list:
             link_element = i.find("a", href=True)
@@ -88,7 +84,6 @@ def parse_with_filters(filters: dict):
                 url = f"https://www.work.ua{link_element['href']}"
                 data.append({"name": name, "url": url})
 
-        # Повертаємо зібрані дані
         print(data)
         return data
 
