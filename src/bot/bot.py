@@ -1,11 +1,11 @@
 import logging
-from telegram.ext import CallbackQueryHandler, CommandHandler, ConversationHandler, MessageHandler, Filters as TgFilters
-from src.bot.menu import filters_instance
 
 from telegram import InlineKeyboardMarkup
 from telegram.ext import CommandHandler, CallbackQueryHandler, Updater
+from telegram.ext import MessageHandler, Filters as TgFilters
 
 from src.bot import buttons, cfg
+from src.bot.menu import filters_instance
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +18,6 @@ def start(update, context):
 if __name__ == '__main__':
     updater = Updater(cfg.token)
     dp = updater.dispatcher
-    # dp.add_handler(CommandHandler('filters', filters_instance.show_filters_menu))
     dp.add_handler(CommandHandler('start', start))
     dp.add_handler(CallbackQueryHandler(buttons.buttons))
 
@@ -28,8 +27,6 @@ if __name__ == '__main__':
         level=logging.INFO
     )
 
-
     logger.info("Бот стартанув")
     updater.start_polling()
     updater.idle()
-
